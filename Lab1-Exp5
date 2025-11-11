@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    int nums[] = {1, 2, 3, 4, 5};
+    int n = sizeof(nums) / sizeof(nums[0]);
+    int max = nums[0];
+
+    for (int i = 1; i < n; i++) {
+        if (nums[i] > max)
+            max = nums[i];
+    }
+
+    printf("Output: %d\n", max);
+    return 0;
+}
