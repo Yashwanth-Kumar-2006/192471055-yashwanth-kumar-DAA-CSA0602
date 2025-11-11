@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int climbStairs(int n) {
+    if(n <= 2)
+        return n;  // Base cases: 1 → 1 way, 2 → 2 ways
+
+    int first = 1, second = 2, ways, i;
+    for(i = 3; i <= n; i++) {
+        ways = first + second;
+        first = second;
+        second = ways;
+    }
+    return second;
+}
+
+int main() {
+    int n;
+    printf("Enter number of steps: ");
+    scanf("%d", &n);
+
+    printf("Number of distinct ways to climb to the top: %d\n", climbStairs(n));
+    return 0;
+}
