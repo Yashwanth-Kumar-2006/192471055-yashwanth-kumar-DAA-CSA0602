@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[100];
+    int i, start, n;
+
+    printf("Enter string: ");
+    scanf("%s", s);
+    n = strlen(s);
+
+    printf("Large groups (start, end): ");
+
+    i = 0;
+    while(i < n) {
+        start = i;
+        
+        while(i + 1 < n && s[i] == s[i + 1])
+            i++;
+    
+        if(i - start + 1 >= 3)
+            printf("[%d,%d] ", start, i);
+        i++;
+    }
+
+    printf("\n");
+    return 0;
+}
