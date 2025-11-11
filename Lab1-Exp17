@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+double min(double a, double b) {
+    return a < b ? a : b;
+}
+
+int main() {
+    int poured, query_row, query_glass;
+    printf("Enter poured, query_row, query_glass: ");
+    scanf("%d %d %d", &poured, &query_row, &query_glass);
+
+    double tower[101][101] = {0};
+    tower[0][0] = poured;
+
+    for (int i = 0; i <= query_row; i++) {
+        for (int j = 0; j <= i; j++) {
+            double overflow = (tower[i][j] - 1.0) / 2.0;
+            if (overflow > 0) {
+                tower[i + 1][j] += overflow;
