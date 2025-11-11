@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+#define MOD 1000000007  // to handle large numbers
+
+int findPaths(int m, int n, int N, int i, int j) {
+    int dp[51][51] = {0}, temp[51][51] = {0};
+    int x, y, step, a, b, count;
+    int dirs[4][2] = {{1,0},{-1,0},{0,1},{0,-1}}; // Down, Up, Right, Left
+    long res = 0;
+
+    dp[i][j] = 1; // starting position
+
+    for(step = 1; step <= N; step++) {
+        for(x = 0; x < m;
