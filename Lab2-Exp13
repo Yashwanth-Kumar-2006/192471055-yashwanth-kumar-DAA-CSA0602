@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX 10
+
+int n;
+int cost[MAX][MAX];
+int used[MAX];
+int bestAssign[MAX];
+int currAssign[MAX];
+int minCost = INT_MAX;
+
+void tsp(int level, int currCost) {
+    if(level == n) {
+        if(currCost < minCost) {
+            minCost = currCost;
+            for(int i = 0; i < n; i++)
+                bestAssign[i] = currAssign[i];
+        }
+        return;
+    }
+
+    for(int j = 0; j < n; j++) {
+        if(!used[j]) {
+            used[j] = 1;
+            currAssign[level] = j;
+            tsp(level + 1, currCost + cost[level][j]);
+            used[j] = 0;
+        }
+    }
+}
+
+int main() {
+    printf("Enter number of workers/tasks: ");
+    scanf("%d", &n);
+
+    printf("Enter cost matrix (%dx%d):\n", n, n);
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            scanf("%d", &cost[i][j]);
+
+    tsp(0, 0);
+
+    printf("\nOptimal Assignment:\n");
+    for(int i = 0; i < n; i++)
+        printf("(worker %d, task %d)\n", i + 1, bestAssign[i] + 1);
+    printf("Total Cost: %d\n", minCost);
+
+    return 0;
+}
