@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+
+struct Point {
+    double x, y;
+};
+
+double distance(struct Point a, struct Point b) {
+    return sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
+}
+
+int main() {
+    int n;
+    struct Point points[100];
+    printf("Enter number of points: ");
+    scanf("%d", &n);
+
+    printf("Enter points (x y):\n");
+    for(int i = 0; i < n; i++)
+        scanf("%lf %lf", &points[i].x, &points[i].y);
+
+    double minDist = DBL_MAX;
+    struct Point p1, p2;
+
+    for(int i = 0; i < n; i++) {
+        for(int j = i + 1; j < n; j++) {
+            double d = distance(points[i], points[j]);
+            if(d < minDist) {
+                minDist = d;
+                p1 = points[i];
+                p2 = points[j];
+            }
+        }
+    }
+
+    printf("Closest pair: (%.0f, %.0f) -
