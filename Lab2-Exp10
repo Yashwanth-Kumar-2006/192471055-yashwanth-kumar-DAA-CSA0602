@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+
+struct Point {
+    double x, y;
+};
+
+double distance(struct Point a, struct Point b) {
+    return sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
+}
+
+void findClosestPair(struct Point points[], int n) {
+    double minDist = DBL_MAX;
+    struct Point p1, p2;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            double d = distance(points[i], points[j]);
+            if (d < minDist) {
+                minDist = d;
+                p1 = points[i];
+                p2 = points[j];
+            }
+        }
+    }
+
+    printf("\nClosest pair: (%.1f, %.1f) - (%.1f, %.1f)\n", p1.x, p1.y, p2.x, p2.y);
+    printf("Minimum distance: %.15f\n", minDist);
+}
+
+double cross(struct Point a, struct Point b, struct Point c) {
+    return (b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x);
+}
+
+void convexHull(struct Point p[], int n) {
+    printf("\nConvex Hull Points: ");
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int pos = 0, neg = 0;
+            for (int k = 0; k < n; k++) {
+                if (k != i && k != j) {
+                    double val = cross(p[i], p[j], p[k]);
+                    if (val > 0) pos++;
+                    else if (val < 0) neg++;
+                }
+            }
+          
+            if (pos == 0 || neg == 0)
+                printf("P(%.1f, %.1f) ", p[i].x, p[i].y);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Point points[] = {
+        {10,0}, {11,5}, {
