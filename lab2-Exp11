@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+struct Point {
+    float x, y;
+};
+
+float cross(struct Point a, struct Point b, struct Point c) {
+    return (b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x);
+}
+
+void convexHull(struct Point p[], int n) {
+    printf("Convex Hull Points: ");
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int pos = 0, neg = 0;
+            for (int k = 0; k < n; k++) {
+                if (k != i && k != j) {
+                    float val = cross(p[i], p[j], p[k]);
+                    if (val > 0) pos++;
+                    else if (val < 0) neg++;
+                }
+            }
+            if (pos == 0 || neg == 0)
+                printf("(%.0f, %.0f) ", p[i].x, p[i].y);
+        }
+    }
