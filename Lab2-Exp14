@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+#define MAX 20
+
+int n, weights[MAX], values[MAX], capacity;
+int bestSet[MAX];
+int currSet[MAX];
+int maxValue = 0;
+
+int total_value(int set[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++)
+        sum += values[set[i]];
+    return sum;
+}
+
+int total_weight(int set[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++)
+        sum += weights[set[i]];
+    return sum;
+}
+
+void knapsack(int index, int size) {
+    if (index == n) {
+        int w = total_weight(currSet, size);
+        int v = total_value(currSet, size);
+        if (w <= capacity && v > maxValue) {
+            maxValue = v;
+            for (int i = 0; i < size; i++)
+                bestSet[i] = currSet[i];
+            bestSet[size] = -1;
+        }
+        return;
+    }
+
+    currSet[size] = index;
+    knapsack(index + 1, size + 1);
+
+    knapsack(index + 1, size);
+}
+
+int main() {
+    printf("Enter number of items: ");
+    scanf("%d", &n);
+
+    printf("Enter weights:\n");
+    for (int i = 0; i < n; i++
